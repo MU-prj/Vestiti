@@ -1,0 +1,22 @@
+[project]
+name = "camerino-api"
+version = "0.1.0"
+description = "Camerino HTTP API (FastAPI)"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "camerino-domain",
+  "camerino-color",
+]
+
+[tool.uv.sources]
+camerino-domain = { workspace = true }
+camerino-color = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/camerino_api"]
