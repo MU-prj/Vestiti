@@ -1,0 +1,47 @@
+name: e2e
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start the stack
+        run: docker compose up -d --build
+
+      - name: Wait for services
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8000/health > /dev/null && curl -sf http://localhost:3000 > /dev/null; then
+              echo "Stack is up"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Stack failed to come up in time"
+          docker compose ps
+          docker compose logs
+          exit 1
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @camerino/web exec playwright install --with-deps chromium
+
+      - name: Run Playwright smoke tests
+        env:
+          E2E_BASE_URL: http://localhost:3000
+          E2E_API_URL: http://localhost:8000
+        run: pnpm --filter @camerino/web e2e
+
+      - name: Dump compose logs on failure
+        if: failure()
+        run: docker compose logs

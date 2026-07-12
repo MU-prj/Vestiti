@@ -1,0 +1,43 @@
+name: migrations
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  reversibility:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: camerino
+          POSTGRES_PASSWORD: camerino-ci-only
+          POSTGRES_DB: camerino_migrations
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U camerino"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+asyncpg://camerino:camerino-ci-only@localhost:5432/camerino_migrations
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - name: Verify migrations are reversible (upgrade -> downgrade -> upgrade)
+        run: |
+          if [ ! -f apps/api/alembic.ini ]; then
+            echo "No Alembic configuration yet (lands in phase 1). Skipping."
+            exit 0
+          fi
+          uv sync --locked --all-packages
+          cd apps/api
+          uv run alembic upgrade head
+          uv run alembic downgrade base
+          uv run alembic upgrade head
