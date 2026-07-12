@@ -57,7 +57,7 @@ make e2e        # playwright smoke (richiede stack attivo)
 ## Stato delle fasi
 
 - [x] Fase 0 — Scaffolding & CI skeleton
-- [ ] Fase 1 — Dominio & ingestion normalizzata (Postgres, Alembic, MockAdapter, dedup)
+- [x] Fase 1 — Dominio & ingestion normalizzata (Postgres, Alembic, MockAdapter, dedup)
 - [ ] Fase 2 — SourceAdapter reali (Shopify, Google Shopping feed, affiliati) con mock in CI
 - [ ] Fase 3 — Collections, Outfit & palette-coherence
 - [ ] Fase 4 — Watches: restock & price-drop
@@ -71,3 +71,9 @@ make e2e        # playwright smoke (richiede stack attivo)
 - Fase 0: uv al posto di poetry, gitleaks come binario in CI (niente
   gitleaks-action: richiede licenza per le org), `migrations.yml` skippa finché
   Alembic non esiste. Dettagli in `docs/adr/0001-monorepo-and-tooling.md`.
+- Fase 1: identity key a precedenza fissa GTIN(14)→brand+MPN→brand+SKU→fuzzy
+  (brand, titolo normalizzato, colore); canonical = primo visto, un'offer per
+  (canonical, source); persistenza in `camerino_api.db` dietro il port
+  `ProductStore`; worker dipende dal package `camerino-api`; test async con
+  anyio; integrazione Postgres skippabile. Dettagli in
+  `docs/adr/0002-domain-model-and-dedup.md`.
