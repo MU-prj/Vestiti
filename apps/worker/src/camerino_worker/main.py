@@ -10,6 +10,8 @@ from typing import Any, ClassVar
 
 from arq.connections import RedisSettings
 
+from camerino_worker.tasks.ingest import ingest_mock_sources
+
 
 async def ping(ctx: dict[Any, Any]) -> str:
     """Trivial task used to verify worker wiring end to end."""
@@ -19,5 +21,5 @@ async def ping(ctx: dict[Any, Any]) -> str:
 class WorkerSettings:
     """ARQ worker settings: task registry and Redis connection."""
 
-    functions: ClassVar[list[Callable[..., Awaitable[Any]]]] = [ping]
+    functions: ClassVar[list[Callable[..., Awaitable[Any]]]] = [ping, ingest_mock_sources]
     redis_settings = RedisSettings.from_dsn(os.environ.get("REDIS_URL", "redis://localhost:6379/0"))

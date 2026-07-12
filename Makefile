@@ -34,7 +34,7 @@ fmt:
 	pnpm -r format
 
 migrate:
-	@echo "No migrations yet: Alembic lands in phase 1."
+	cd apps/api && uv run alembic upgrade head
 
 e2e:
 	pnpm --filter @camerino/web e2e

@@ -6,10 +6,12 @@ requires-python = ">=3.12"
 dependencies = [
   "arq>=0.26",
   "camerino-domain",
+  "camerino-api",
 ]
 
 [tool.uv.sources]
 camerino-domain = { workspace = true }
+camerino-api = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
