@@ -30,6 +30,9 @@ jobs:
         with:
           python-version: "3.12"
           enable-cache: true
+          # The job exits early while Alembic does not exist yet (phase 1),
+          # so there may be nothing to cache; do not fail the post step.
+          ignore-nothing-to-cache: true
       - name: Verify migrations are reversible (upgrade -> downgrade -> upgrade)
         run: |
           if [ ! -f apps/api/alembic.ini ]; then
