@@ -9,7 +9,8 @@ COPY packages ./packages
 COPY apps/api ./apps/api
 COPY apps/worker ./apps/worker
 
-RUN uv sync --locked --no-dev
+# The workspace root is virtual: sync the api package (and its workspace deps).
+RUN uv sync --locked --no-dev --package camerino-api
 
 EXPOSE 8000
 CMD ["uv", "run", "--no-sync", "uvicorn", "camerino_api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -9,6 +9,7 @@ COPY packages ./packages
 COPY apps/api ./apps/api
 COPY apps/worker ./apps/worker
 
-RUN uv sync --locked --no-dev
+# The workspace root is virtual: sync the worker package (and its workspace deps).
+RUN uv sync --locked --no-dev --package camerino-worker
 
 CMD ["uv", "run", "--no-sync", "arq", "camerino_worker.main.WorkerSettings"]
