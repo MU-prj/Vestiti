@@ -1,0 +1,23 @@
+# Python and tooling artifacts
+.venv/
+__pycache__/
+*.py
+uv.lock
+pnpm-lock.yaml
+
+# Build outputs
+.next/
+dist/
+node_modules/
+coverage/
+
+# Misc
+LICENSE
+Makefile
+.github/
+infra/
+docs/
+*.md
+*.toml
+*.cfg
+*.ini
