@@ -1,0 +1,86 @@
+[project]
+name = "camerino-monorepo"
+version = "0.1.0"
+description = "Camerino - universal digital fitting room monorepo (workspace root)"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = [
+    "apps/api",
+    "apps/worker",
+    "packages/domain",
+    "packages/color",
+    "packages/adapters",
+]
+
+[tool.uv.sources]
+camerino-domain = { workspace = true }
+camerino-color = { workspace = true }
+camerino-adapters = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9",
+    "mypy>=1.14",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "pytest-asyncio>=0.25",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = [
+    "apps/api/src",
+    "apps/worker/src",
+    "packages/domain/src",
+    "packages/color/src",
+    "packages/adapters/src",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "UP",     # pyupgrade
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "RUF",    # ruff-specific
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = [
+    "apps/api/src",
+    "apps/worker/src",
+    "packages/domain/src",
+    "packages/color/src",
+    "packages/adapters/src",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "apps/api/tests",
+    "apps/worker/tests",
+    "packages/domain/tests",
+    "packages/color/tests",
+    "packages/adapters/tests",
+]
+asyncio_mode = "auto"
+addopts = ["--import-mode=importlib"]
+
+[tool.coverage.run]
+source_pkgs = ["camerino.domain", "camerino.color"]
+
+[tool.coverage.report]
+show_missing = true
