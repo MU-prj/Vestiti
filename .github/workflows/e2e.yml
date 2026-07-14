@@ -1,0 +1,30 @@
+name: E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start the stack
+        run: docker compose -f infra/docker-compose.yml up -d --build --wait --wait-timeout 300
+      - name: API health
+        run: |
+          curl --fail --retry 10 --retry-delay 3 --retry-all-errors http://localhost:8000/health
+          curl --fail http://localhost:8000/ready
+      - name: Web homepage
+        run: curl --fail --retry 10 --retry-delay 3 --retry-all-errors http://localhost:3000/ | grep -i camerino
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f infra/docker-compose.yml logs
+      - name: Tear down
+        if: always()
+        run: docker compose -f infra/docker-compose.yml down -v
