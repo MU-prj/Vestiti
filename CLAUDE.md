@@ -41,7 +41,7 @@ packages/ui   componenti condivisi   infra/       docker-compose + riferimenti C
 | Fase | Contenuto | Stato |
 | --- | --- | --- |
 | 0 | Scaffolding monorepo + CI skeleton (lint/typecheck/test/gitleaks/build, e2e smoke) | ✅ completata |
-| 1 | Dominio + ingestion + dedup `ProductIdentity` + Alembic + `migrations.yml` | ⏳ |
+| 1 | Dominio + ingestion + dedup `ProductIdentity` + Alembic + `migrations.yml` | ✅ completata |
 | 2 | SourceAdapter reali (Shopify/GoogleShopping/Affiliate) su fixture, mock in CI | ⏳ |
 | 3 | Collections, Outfit, palette-coherence, AffiliateUrlBuilder | ⏳ |
 | 4 | Watches restock/price-drop + diff engine + Notifier | ⏳ |
@@ -59,6 +59,8 @@ Le decisioni architetturali non banali vivono in `docs/adr/`. Registro sintetico
 - **2026-07-14 — Branch di lavoro unico.** L'ambiente di esecuzione vincola lo sviluppo al branch `claude/camerino-wardrobe-dj2t6f` (niente branch `phase/NN-*`): le fasi sono serie di commit conventional-commit su questo branch, con PR verso `main`.
 - **2026-07-14 — uv workspace + hatchling.** Monorepo Python come uv workspace (membri: apps/api, apps/worker, packages/domain|color|adapters), namespace package `camerino.*`. Pytest con `--import-mode=importlib` per evitare collisioni di moduli di test omonimi tra package.
 - **2026-07-14 — gitleaks via CLI container.** In CI gitleaks gira come container ufficiale (`ghcr.io/gitleaks/gitleaks`) e non come `gitleaks-action` (che richiede licenza per le organizzazioni).
+- **2026-07-14 — Dedup deterministico a 4 chiavi** (`gtin` → `brand_mpn` → `brand_sku` → `fuzzy` su forme normalizzate, con regola di conflitto sugli identificatori forti): vedi ADR 0001. Stessa semantica in memoria (`IdentityIndex`) e in SQL (`ingest_product`).
+- **2026-07-14 — Test DB su SQLite, migrazioni su PostgreSQL.** I modelli usano `JSON().with_variant(JSONB, "postgresql")` così i test unit girano in-memory senza servizi; la reversibilità delle migrazioni Alembic è verificata contro Postgres reale in `migrations.yml`.
 - **2026-07-14 — `.gitignore` riscritto.** Il template iniziale (LaTeX/venv) ignorava directory legittime come `lib/`; sostituito con regole specifiche per il monorepo.
 
 ## 6. Protocollo di autonomia
