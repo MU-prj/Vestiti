@@ -84,3 +84,4 @@ source_pkgs = ["camerino.domain", "camerino.color"]
 
 [tool.coverage.report]
 show_missing = true
+fail_under = 85
