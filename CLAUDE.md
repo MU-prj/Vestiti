@@ -58,7 +58,7 @@ make e2e        # playwright smoke (richiede stack attivo)
 
 - [x] Fase 0 — Scaffolding & CI skeleton
 - [x] Fase 1 — Dominio & ingestion normalizzata (Postgres, Alembic, MockAdapter, dedup)
-- [ ] Fase 2 — SourceAdapter reali (Shopify, Google Shopping feed, affiliati) con mock in CI
+- [x] Fase 2 — SourceAdapter reali (Shopify, Google Shopping feed, affiliati) con mock in CI
 - [ ] Fase 3 — Collections, Outfit & palette-coherence
 - [ ] Fase 4 — Watches: restock & price-drop
 - [ ] Fase 5 — Motore armocromia + ΔE (`packages/color`)
@@ -77,3 +77,9 @@ make e2e        # playwright smoke (richiede stack attivo)
   `ProductStore`; worker dipende dal package `camerino-api`; test async con
   anyio; integrazione Postgres skippabile. Dettagli in
   `docs/adr/0002-domain-model-and-dedup.md`.
+- Fase 2: fixture registrate + `httpx.MockTransport` al posto di vcrpy; feed
+  dietro loader iniettabile (`from_content`/`from_url`); record malformati =
+  skip conteggiato (`skipped_records`), mai crash; mapping affiliati come
+  configurazione (`AffiliateFieldMapping`, preset `AWIN_MAPPING`); contract-test
+  parametrizzato su registro di factory. Dettagli in
+  `docs/adr/0003-source-adapters.md`.
