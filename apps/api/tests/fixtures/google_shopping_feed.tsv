@@ -1,0 +1,5 @@
+id	title	description	link	image_link	price	availability	brand	gtin	mpn	color	google_product_category
+gs-101	Air Max 90 White	Iconic runner in white leather.	https://store.example.com/air-max-90	https://cdn.example.com/gs/air-max-90.jpg	139.99 EUR	in stock	Nike	0885909950805	AM90-WHT	white	Apparel & Accessories > Shoes
+gs-102	Merino Crewneck	Extra-fine merino crewneck sweater.	https://store.example.com/merino-crewneck	https://cdn.example.com/gs/merino.jpg	95.00 EUR	out of stock	Uniqlo		UQ-MER-CRW	navy	Apparel & Accessories > Clothing > Shirts & Tops
+gs-103	Broken Row Without Price	This record must be skipped.	https://store.example.com/broken	https://cdn.example.com/gs/broken.jpg		in stock	Nowhere
+gs-104	Suede Loafers	Handmade suede loafers.	https://store.example.com/suede-loafers	https://cdn.example.com/gs/loafers.jpg	210.00 EUR	preorder	Velasca	5000000000024		tobacco	Apparel & Accessories > Shoes

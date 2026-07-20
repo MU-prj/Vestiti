@@ -1,0 +1,66 @@
+{
+  "data": {
+    "products": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/Product/8001",
+            "handle": "air-max-90-white",
+            "title": "Air Max 90 White",
+            "description": "Iconic runner in white leather.",
+            "vendor": "Nike",
+            "onlineStoreUrl": "https://boutique.example.com/products/air-max-90-white",
+            "featuredImage": {
+              "url": "https://cdn.shopify.example.com/air-max-90.jpg"
+            },
+            "variants": {
+              "edges": [
+                {
+                  "node": {
+                    "sku": "AM90-WHT-42",
+                    "barcode": "0885909950805",
+                    "availableForSale": true,
+                    "price": {
+                      "amount": "139.99",
+                      "currencyCode": "EUR"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/Product/8002",
+            "handle": "wool-overshirt",
+            "title": "Wool Overshirt",
+            "description": "Heavyweight wool overshirt, brushed finish.",
+            "vendor": "Norse Projects",
+            "onlineStoreUrl": null,
+            "featuredImage": null,
+            "variants": {
+              "edges": [
+                {
+                  "node": {
+                    "sku": "NP-OVR-NAVY",
+                    "barcode": null,
+                    "availableForSale": false,
+                    "price": {
+                      "amount": "240.00",
+                      "currencyCode": "EUR"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": true,
+        "endCursor": "cursor-page-1"
+      }
+    }
+  }
+}

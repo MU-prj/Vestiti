@@ -1,0 +1,40 @@
+{
+  "data": {
+    "products": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/Product/8003",
+            "handle": "linen-shirt",
+            "title": "Linen Shirt",
+            "description": "Relaxed linen shirt for warm days.",
+            "vendor": "Sunspel",
+            "onlineStoreUrl": "https://boutique.example.com/products/linen-shirt",
+            "featuredImage": {
+              "url": "https://cdn.shopify.example.com/linen-shirt.jpg"
+            },
+            "variants": {
+              "edges": [
+                {
+                  "node": {
+                    "sku": "SUN-LIN-M",
+                    "barcode": "5000000000017",
+                    "availableForSale": true,
+                    "price": {
+                      "amount": "115.00",
+                      "currencyCode": "EUR"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "pageInfo": {
+        "hasNextPage": false,
+        "endCursor": "cursor-page-2"
+      }
+    }
+  }
+}
