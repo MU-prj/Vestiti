@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>Example Store Feed</title>
+    <link>https://store.example.com</link>
+    <description>Product feed fixture</description>
+    <item>
+      <g:id>gs-001</g:id>
+      <g:title>Air Max 90 White</g:title>
+      <g:description>Iconic runner in white leather.</g:description>
+      <g:link>https://store.example.com/air-max-90</g:link>
+      <g:image_link>https://cdn.example.com/gs/air-max-90.jpg</g:image_link>
+      <g:price>139.99 EUR</g:price>
+      <g:availability>in stock</g:availability>
+      <g:brand>Nike</g:brand>
+      <g:gtin>0885909950805</g:gtin>
+      <g:mpn>AM90-WHT</g:mpn>
+      <g:color>white</g:color>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Shoes</g:google_product_category>
+    </item>
+    <item>
+      <g:id>gs-002</g:id>
+      <g:title>Merino Crewneck</g:title>
+      <g:description>Extra-fine merino crewneck sweater.</g:description>
+      <g:link>https://store.example.com/merino-crewneck</g:link>
+      <g:image_link>https://cdn.example.com/gs/merino.jpg</g:image_link>
+      <g:price>95.00 EUR</g:price>
+      <g:availability>out_of_stock</g:availability>
+      <g:brand>Uniqlo</g:brand>
+      <g:mpn>UQ-MER-CRW</g:mpn>
+      <g:color>navy</g:color>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing &gt; Shirts &amp; Tops</g:google_product_category>
+    </item>
+    <item>
+      <g:id>gs-003</g:id>
+      <g:title>Broken Row Without Price</g:title>
+      <g:description>This record must be skipped by the parser.</g:description>
+      <g:link>https://store.example.com/broken</g:link>
+      <g:image_link>https://cdn.example.com/gs/broken.jpg</g:image_link>
+      <g:availability>in stock</g:availability>
+      <g:brand>Nowhere</g:brand>
+    </item>
+    <item>
+      <g:id>gs-004</g:id>
+      <g:title>Suede Loafers</g:title>
+      <g:description>Handmade suede loafers.</g:description>
+      <g:link>https://store.example.com/suede-loafers</g:link>
+      <g:image_link>https://cdn.example.com/gs/loafers.jpg</g:image_link>
+      <g:price>EUR 210.00</g:price>
+      <g:availability>preorder</g:availability>
+      <g:brand>Velasca</g:brand>
+      <g:gtin>5000000000024</g:gtin>
+      <g:color>tobacco</g:color>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Shoes</g:google_product_category>
+    </item>
+  </channel>
+</rss>

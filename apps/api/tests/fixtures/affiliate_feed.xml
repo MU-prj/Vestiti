@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+  <product>
+    <aw_product_id>ax-601</aw_product_id>
+    <product_name>Denim Jacket</product_name>
+    <description>Rigid selvedge denim jacket.</description>
+    <brand_name>A.P.C.</brand_name>
+    <search_price>295.00</search_price>
+    <currency>EUR</currency>
+    <aw_deep_link>https://www.awin1.example.com/pclick?p=601</aw_deep_link>
+    <merchant_deep_link>https://partner.example.com/denim-jacket</merchant_deep_link>
+    <merchant_image_url>https://cdn.example.com/ax/denim-jacket.jpg</merchant_image_url>
+    <in_stock>1</in_stock>
+    <ean>5000000000031</ean>
+    <mpn>APC-DNM-JKT</mpn>
+    <merchant_product_id>P-601</merchant_product_id>
+  </product>
+  <product>
+    <aw_product_id>ax-602</aw_product_id>
+    <product_name>Leather Belt</product_name>
+    <description>Vegetable-tanned leather belt.</description>
+    <brand_name>Anderson's</brand_name>
+    <search_price>85.00</search_price>
+    <currency>EUR</currency>
+    <aw_deep_link>https://www.awin1.example.com/pclick?p=602</aw_deep_link>
+    <merchant_deep_link>https://partner.example.com/leather-belt</merchant_deep_link>
+    <merchant_image_url>https://cdn.example.com/ax/belt.jpg</merchant_image_url>
+    <in_stock>0</in_stock>
+    <ean></ean>
+    <mpn>AND-BELT-34</mpn>
+    <merchant_product_id>P-602</merchant_product_id>
+  </product>
+</products>
