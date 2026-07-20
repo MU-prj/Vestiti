@@ -35,6 +35,12 @@ def test_product_rejects_blank_required_fields(field: str) -> None:
         make_product(**{field: "   "})
 
 
+@pytest.mark.parametrize("amount", ["0", "0.00"])
+def test_product_rejects_non_positive_price(amount: str) -> None:
+    with pytest.raises(ValueError, match="price"):
+        make_product(price=Money.of(amount, "EUR"))
+
+
 def test_availability_parses_from_feed_strings() -> None:
     assert Availability("in_stock") is Availability.IN_STOCK
     assert Availability("out_of_stock") is Availability.OUT_OF_STOCK
