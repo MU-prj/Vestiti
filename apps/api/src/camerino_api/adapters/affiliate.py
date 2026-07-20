@@ -14,9 +14,9 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Literal
-from xml.etree import ElementTree
 
 import httpx
+from defusedxml.ElementTree import fromstring as parse_untrusted_xml
 
 from camerino_domain import Availability, Money, Product
 
@@ -182,7 +182,7 @@ def _parse_csv(content: str) -> list[dict[str, str]]:
 
 
 def _parse_xml(content: str, record_tag: str) -> list[dict[str, str]]:
-    root = ElementTree.fromstring(content)
+    root = parse_untrusted_xml(content)
     records: list[dict[str, str]] = []
     for element in root.iter(record_tag):
         records.append({child.tag: (child.text or "").strip() for child in element})

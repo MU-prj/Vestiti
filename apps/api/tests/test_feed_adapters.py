@@ -9,7 +9,9 @@ from adapter_fixtures import (
     build_google_xml_adapter,
     fixture_text,
 )
+from defusedxml.common import EntitiesForbidden
 
+from camerino_api.adapters.affiliate import AWIN_MAPPING, AffiliateFeedAdapter
 from camerino_api.adapters.google_shopping import GoogleShoppingFeedAdapter
 from camerino_domain import Availability
 
@@ -80,7 +82,8 @@ class TestAffiliateCsv:
         products = {p.title: p async for p in adapter.fetch_products()}
 
         assert set(products) == {"Air Max 90 White", "Silk Scarf"}
-        assert adapter.skipped_records == 1
+        # One row without a price, one with price 0.00: both skipped.
+        assert adapter.skipped_records == 2
 
         sneaker = products["Air Max 90 White"]
         assert sneaker.brand == "Nike"
@@ -110,3 +113,32 @@ class TestAffiliateXml:
         belt = products["Leather Belt"]
         assert belt.availability is Availability.OUT_OF_STOCK
         assert belt.gtin is None
+
+
+class TestXmlHardening:
+    """Feeds are untrusted input: entity declarations must be rejected."""
+
+    ENTITY_BOMB = (
+        '<?xml version="1.0"?>\n'
+        '<!DOCTYPE products [<!ENTITY bomb "boom">]>\n'
+        "<products><product><aw_product_id>&bomb;</aw_product_id></product></products>"
+    )
+
+    async def test_affiliate_xml_rejects_entity_declarations(self) -> None:
+        adapter = AffiliateFeedAdapter.from_content(
+            source_id="hostile-affiliate",
+            content=self.ENTITY_BOMB,
+            mapping=AWIN_MAPPING,
+            feed_format="xml",
+        )
+        with pytest.raises(EntitiesForbidden):
+            [p async for p in adapter.fetch_products()]
+
+    async def test_google_xml_rejects_entity_declarations(self) -> None:
+        adapter = GoogleShoppingFeedAdapter.from_content(
+            source_id="hostile-google",
+            content=self.ENTITY_BOMB,
+            feed_format="xml",
+        )
+        with pytest.raises(EntitiesForbidden):
+            [p async for p in adapter.fetch_products()]
