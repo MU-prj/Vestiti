@@ -2,3 +2,4 @@ aw_product_id,product_name,description,brand_name,search_price,currency,aw_deep_
 aw-501,Air Max 90 White,Iconic runner in white leather.,Nike,134.50,EUR,https://www.awin1.example.com/pclick?p=501,https://partner.example.com/air-max-90,https://cdn.example.com/aw/air-max-90.jpg,1,0885909950805,AM90-WHT,P-501
 aw-502,Silk Scarf,Printed silk twill scarf.,Gucci,390.00,EUR,https://www.awin1.example.com/pclick?p=502,https://partner.example.com/silk-scarf,https://cdn.example.com/aw/silk-scarf.jpg,0,,GG-SCARF-01,P-502
 aw-503,Broken Row,No price on this record.,Nowhere,,EUR,https://www.awin1.example.com/pclick?p=503,https://partner.example.com/broken,https://cdn.example.com/aw/broken.jpg,1,,,P-503
+aw-504,Zero Price Cap,Price 0.00 must be skipped.,Nowhere,0.00,EUR,https://www.awin1.example.com/pclick?p=504,https://partner.example.com/zero,https://cdn.example.com/aw/zero.jpg,1,,,P-504

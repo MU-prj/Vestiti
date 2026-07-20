@@ -27,7 +27,7 @@ query Products($first: Int!, $after: String) {
         vendor
         onlineStoreUrl
         featuredImage { url }
-        variants(first: 1) {
+        variants(first: 100) {
           edges {
             node {
               sku
@@ -43,6 +43,11 @@ query Products($first: Int!, $after: String) {
   }
 }
 """
+
+
+class ShopifyStorefrontError(RuntimeError):
+    """The Storefront API answered with GraphQL-level errors (bad token,
+    rejected query, throttling): a 200 response whose data is unusable."""
 
 
 class ShopifyStorefrontAdapter:
@@ -87,7 +92,20 @@ class ShopifyStorefrontAdapter:
                     headers={"X-Shopify-Storefront-Access-Token": self._token},
                 )
                 response.raise_for_status()
-                connection = response.json()["data"]["products"]
+                body = response.json()
+                errors = body.get("errors")
+                if errors:
+                    detail = "; ".join(
+                        str(error.get("message", error)) if isinstance(error, dict) else str(error)
+                        for error in errors
+                    )
+                    msg = f"storefront query on {self._shop_domain} failed: {detail}"
+                    raise ShopifyStorefrontError(msg)
+                data = body.get("data")
+                if not data:
+                    msg = f"storefront response from {self._shop_domain} carries no data"
+                    raise ShopifyStorefrontError(msg)
+                connection = data["products"]
                 for edge in connection["edges"]:
                     product = self._to_product(edge["node"])
                     if product is None:
@@ -106,13 +124,21 @@ class ShopifyStorefrontAdapter:
         variant_edges = node.get("variants", {}).get("edges", [])
         if not variant_edges:
             return None
-        variant = variant_edges[0]["node"]
         image = node.get("featuredImage") or {}
         product_url = (
             node.get("onlineStoreUrl")
             or f"https://{self._shop_domain}/products/{node.get('handle', '')}"
         )
         try:
+            variants = [edge["node"] for edge in variant_edges]
+            # In stock if ANY variant is; price/sku/gtin come from the cheapest
+            # purchasable variant ("from" price). Per-variant modelling is a
+            # phase 4 concern; the full variant list survives in raw.
+            purchasable = [v for v in variants if v.get("availableForSale")]
+            variant = min(
+                purchasable or variants,
+                key=lambda v: Decimal(v["price"]["amount"]),
+            )
             return Product(
                 id=f"{self._source_id}:{node['id']}",
                 brand=node.get("vendor") or "",
@@ -122,11 +148,7 @@ class ShopifyStorefrontAdapter:
                     Decimal(variant["price"]["amount"]),
                     variant["price"]["currencyCode"],
                 ),
-                availability=(
-                    Availability.IN_STOCK
-                    if variant.get("availableForSale")
-                    else Availability.OUT_OF_STOCK
-                ),
+                availability=(Availability.IN_STOCK if purchasable else Availability.OUT_OF_STOCK),
                 image_url=image.get("url") or "",
                 product_url=product_url,
                 source_id=self._source_id,

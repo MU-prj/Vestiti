@@ -81,3 +81,6 @@ class Product:
             if not value.strip():
                 msg = f"{name} must not be blank"
                 raise ValueError(msg)
+        if self.price.amount <= 0:
+            msg = f"price must be positive, got {self.price.amount}"
+            raise ValueError(msg)

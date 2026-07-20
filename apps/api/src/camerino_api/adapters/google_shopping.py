@@ -11,9 +11,9 @@ import csv
 import io
 from collections.abc import AsyncIterator, Awaitable, Callable
 from typing import Literal
-from xml.etree import ElementTree
 
 import httpx
+from defusedxml.ElementTree import fromstring as parse_untrusted_xml
 
 from camerino_api.adapters.parsing import parse_availability, parse_price
 from camerino_domain import Product
@@ -110,7 +110,7 @@ class GoogleShoppingFeedAdapter:
 
 
 def _parse_xml(content: str) -> list[dict[str, str]]:
-    root = ElementTree.fromstring(content)
+    root = parse_untrusted_xml(content)
     records: list[dict[str, str]] = []
     for item in root.iter("item"):
         record: dict[str, str] = {}

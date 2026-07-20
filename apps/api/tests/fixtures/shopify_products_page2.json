@@ -29,6 +29,45 @@
               ]
             }
           }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/Product/8004",
+            "handle": "wool-scarf",
+            "title": "Wool Scarf",
+            "description": "Lambswool scarf, two colourways.",
+            "vendor": "Johnstons of Elgin",
+            "onlineStoreUrl": null,
+            "featuredImage": {
+              "url": "https://cdn.shopify.example.com/wool-scarf.jpg"
+            },
+            "variants": {
+              "edges": [
+                {
+                  "node": {
+                    "sku": "JOE-SCF-CAM",
+                    "barcode": "5000000000048",
+                    "availableForSale": false,
+                    "price": {
+                      "amount": "120.00",
+                      "currencyCode": "EUR"
+                    }
+                  }
+                },
+                {
+                  "node": {
+                    "sku": "JOE-SCF-GRY",
+                    "barcode": "5000000000055",
+                    "availableForSale": true,
+                    "price": {
+                      "amount": "90.00",
+                      "currencyCode": "EUR"
+                    }
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       "pageInfo": {

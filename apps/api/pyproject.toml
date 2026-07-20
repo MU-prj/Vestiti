@@ -12,6 +12,7 @@ dependencies = [
   "asyncpg>=0.30",
   "camerino-domain",
   "camerino-color",
+  "defusedxml>=0.7.1",
 ]
 
 [tool.uv.sources]
